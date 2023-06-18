@@ -65,3 +65,23 @@ getVideoDataFromHive() async {
   // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
   videoDataNotifier.notifyListeners();
 }
+
+updateData({required DataModelHive inputData,required int key}) async {
+  if (inputData.documentType == "mp3") {
+    final hiveModelObject = await Hive.openBox<DataModelHive>("audioData");
+    await hiveModelObject.put(key, inputData);
+  }
+  if (inputData.documentType == "mp4") {
+    final hiveModelObject = await Hive.openBox<DataModelHive>("videoData");
+    await hiveModelObject.put(key, inputData);
+  }
+  if (inputData.documentType == "Pdf") {
+    final hiveModelObject = await Hive.openBox<DataModelHive>("documentData");
+    await hiveModelObject.put(key, inputData);
+  }
+  if (inputData.documentType == "jpg") {
+    final hiveModelObject = await Hive.openBox<DataModelHive>("imageData");
+    await hiveModelObject.put(key, inputData);
+  }
+  log("added data success with ${inputData.documentType} extension");
+}

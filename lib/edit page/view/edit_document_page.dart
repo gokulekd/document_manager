@@ -1,12 +1,17 @@
 import 'package:document_manager/details%20view%20page/widgets/document_overview_main_widget.dart';
 import 'package:document_manager/edit%20page/widgets/document_details_show_widget_edit_screen.dart';
+import 'package:document_manager/home%20page/functions/hive_data_model_functions.dart';
+import 'package:document_manager/home%20page/model/data_model_hive.dart';
 import 'package:document_manager/home%20page/view/home_page_new.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class EditDocumentPage extends StatefulWidget {
-  const EditDocumentPage({super.key});
+  int index;
+  DataModelHive dataModel;
+  EditDocumentPage({super.key, required this.dataModel, required this.index});
 
   @override
   State<EditDocumentPage> createState() => _EditDocumentPageState();
@@ -37,9 +42,12 @@ class _EditDocumentPageState extends State<EditDocumentPage> {
 
   @override
   void initState() {
-    nameController = TextEditingController();
-    dateController = TextEditingController();
-    descriptionController = TextEditingController();
+    nameController = TextEditingController(text: widget.dataModel.title,);
+    dateController = TextEditingController(
+      text: DateFormat.yMMMd().format(widget.dataModel.expiryDate),
+    );
+    descriptionController =
+        TextEditingController(text: widget.dataModel.description);
     super.initState();
   }
 
@@ -78,8 +86,8 @@ class _EditDocumentPageState extends State<EditDocumentPage> {
               child: DocumentOverViewMainWidget(
                   heightMediaQuery: height,
                   widthMediaQuery: width,
-                  documentType: "pdf",
-                  title: "hello dear"),
+                  documentType: widget.dataModel.documentType,
+                  title: widget.dataModel.title),
             ),
             DocumentDetailsShowWidgetEditScreen(width: width),
             Padding(
@@ -243,7 +251,17 @@ class _EditDocumentPageState extends State<EditDocumentPage> {
                               fixedSize: const Size(150, 50),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15))),
-                          onPressed: () {
+                          onPressed: () async {
+                            final data = DataModelHive(
+                              title: nameController.text,
+                              description: descriptionController.text,
+                              expiryDate: selectedDate!,
+                              fileSize: widget.dataModel.fileSize,
+                              documentType: widget.dataModel.documentType,
+                            );
+                            await updateData(
+                                inputData: data, key: widget.index);
+                            // ignore: use_build_context_synchronously
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(

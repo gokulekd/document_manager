@@ -62,7 +62,7 @@ class _ImageCardState extends State<ImageCard> {
                   height: heightMediaQuery * 0.19,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: FileImage(File(widget.modelData.filePath)),
+                        image: FileImage(File(widget.modelData.filePath!)),
                         fit: BoxFit.cover),
                     color: const Color(0xff5C71F3),
                     borderRadius: const BorderRadius.vertical(

@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class AudioDetailedViewPage extends StatefulWidget {
   DataModelHive dataModel;
-  AudioDetailedViewPage({super.key, required this.dataModel});
+  int index;
+  AudioDetailedViewPage({super.key, required this.dataModel,required this.index});
 
   @override
   State<AudioDetailedViewPage> createState() => _AudioDetailedViewPageState();
@@ -58,13 +59,13 @@ class _AudioDetailedViewPageState extends State<AudioDetailedViewPage> {
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
               child: MusicOverviewMainWidget(
-                  filePath: widget.dataModel.filePath,
+                  filePath: widget.dataModel.filePath!,
                   heightMediaQuery: height,
                   widthMediaQuery: width,
                   documentType: widget.dataModel.documentType,
                   title: widget.dataModel.title),
             ),
-            MusicDetailsShowWidget(
+            MusicDetailsShowWidget(index: widget.index,
                 width: width, data: widget.dataModel, fileSize: documentSize),
             const Padding(
               padding: EdgeInsets.only(top: 15.0, left: 14),

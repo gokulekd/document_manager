@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class AudioCard extends StatefulWidget {
   DataModelHive data;
-  AudioCard({super.key, required this.data});
+  int index;
+  AudioCard({super.key, required this.data,required this.index});
 
   @override
   State<AudioCard> createState() => _AudioCardState();
@@ -41,7 +42,7 @@ class _AudioCardState extends State<AudioCard> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AudioDetailedViewPage(dataModel: widget.data),
+            builder: (context) => AudioDetailedViewPage(dataModel: widget.data,index:widget.index ),
           ),
         );
       },

@@ -53,7 +53,7 @@ class _AudioCardWidgetGroupState extends State<AudioCardWidgetGroup> {
                 itemCount: mp3Data.length,
                 itemBuilder: (BuildContext ctx, index) {
                   final data = mp3Data[index];
-                  return AudioCard(
+                  return AudioCard(index: index,
                     data: data,
                   );
                 },

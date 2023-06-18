@@ -1,4 +1,3 @@
-import 'package:document_manager/edit%20page/view/edit_document_page.dart';
 import 'package:document_manager/home%20page/model/data_model_hive.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -90,12 +89,12 @@ class DocumentDetailsShowWidget extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50))),
                 onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const EditDocumentPage(),
-                    ),
-                  );
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const EditDocumentPage(),
+                  //   ),
+                  // );
                 },
                 icon: const Icon(Icons.edit),
                 label: const Text("Edit")),

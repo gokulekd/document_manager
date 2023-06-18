@@ -22,7 +22,7 @@ class DataModelHive {
   double fileSize;
 
   @HiveField(5)
-  String filePath;
+  String? filePath;
   
   @HiveField(6)
   String documentType;
@@ -32,7 +32,7 @@ class DataModelHive {
     required this.description,
     required this.expiryDate,
     required this.fileSize,
-    required this.filePath,
+     this.filePath,
     required this.documentType,
   });
 

@@ -1,4 +1,3 @@
-
 import 'package:document_manager/home%20page/model/data_model_hive.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -8,12 +7,14 @@ class MusicDetailsShowWidget extends StatelessWidget {
   MusicDetailsShowWidget(
       {super.key,
       required this.width,
+      required this.index,
       required this.data,
       required this.fileSize});
 
   final double width;
   DataModelHive data;
   String fileSize;
+  int index;
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +105,7 @@ class MusicDetailsShowWidget extends StatelessWidget {
                 ),
               ],
             ),
+        
           ],
         ),
       ),

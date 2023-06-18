@@ -1,5 +1,5 @@
 import 'package:document_manager/home%20page/model/data_model_hive.dart';
-import 'package:document_manager/home%20page/view/home_page_new.dart';
+import 'package:document_manager/splash%20page/view/splash_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         ],
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomePageScreen(),
+      home: const SplashPageView(),
     );
   }
 }

@@ -33,7 +33,7 @@ class _VideoCardWidgetState extends State<VideoCardWidget> {
   Future<void> _generateThumbnail() async {
   
     final thumbnailPath = await VideoThumbnail.thumbnailFile(
-      video: widget.dataModel.filePath,
+      video: widget.dataModel.filePath!,
       thumbnailPath: (await getTemporaryDirectory()).path,
       imageFormat: ImageFormat.JPEG,
       maxHeight: 200,
