@@ -1,0 +1,1 @@
+const lottieFile = "assets/splash_screen_animation.json";
