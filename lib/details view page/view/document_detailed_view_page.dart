@@ -1,14 +1,18 @@
 import 'dart:developer';
 
 import 'package:document_manager/details%20view%20page/widgets/document_details_show_widget.dart';
-import 'package:document_manager/details%20view%20page/widgets/document_overview_main_widget.dart';
+import 'package:document_manager/details%20view%20page/widgets/image_overview_main_widget.dart';
+import 'package:document_manager/details%20view%20page/widgets/music_overview_main_widget.dart';
+import 'package:document_manager/details%20view%20page/widgets/pdf_overview_main_widget.dart';
+import 'package:document_manager/details%20view%20page/widgets/video_overview_show_widget.dart';
 import 'package:document_manager/home%20page/model/data_model_hive.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class DocumentDetailedViewPage extends StatefulWidget {
   DataModelHive dataModel;
-  DocumentDetailedViewPage({super.key, required this.dataModel});
+  
+  DocumentDetailedViewPage({super.key, required this.dataModel,});
 
   @override
   State<DocumentDetailedViewPage> createState() =>
@@ -16,24 +20,49 @@ class DocumentDetailedViewPage extends StatefulWidget {
 }
 
 class _DocumentDetailedViewPageState extends State<DocumentDetailedViewPage> {
-
-   @override
-    void initState() { 
-      formatFileSize();
-      super.initState();
-      
+  Widget checkWidgetType() {
+    if (widget.dataModel.documentType == "mp3") {
+      return MusicOverviewMainWidget(
+          documentType: widget.dataModel.documentType,
+          filePath: widget.dataModel.filePath!,
+          title: widget.dataModel.title);
+    } else if (widget.dataModel.documentType == "mp4") {
+     return VideoOverviewMainWidget(
+          documentType: widget.dataModel.documentType,
+          filePath: widget.dataModel.filePath!,
+          title: widget.dataModel.title);
+    } else if (widget.dataModel.documentType == "Pdf") {
+    return  PdfOverviewMainWidget(
+          documentType: widget.dataModel.documentType,
+          filePath: widget.dataModel.filePath!,
+          title: widget.dataModel.title);
+    } else if (widget.dataModel.documentType == "jpg") {
+    return  ImageOverviewMainWidget(
+          documentType: widget.dataModel.documentType,
+          filePath: widget.dataModel.filePath!,
+          title: widget.dataModel.title);
     }
+
+    return const SizedBox();
+  }
+
+  @override
+  void initState() {
+    formatFileSize();
+    // checkWidgetType();
+    super.initState();
+  }
 
   String documentSize = '';
 
   formatFileSize() {
-    double fileSizeInMB = widget.dataModel.fileSize / 100000; // Convert KB to MB
+    double fileSizeInMB =
+        widget.dataModel.fileSize / 100000; // Convert KB to MB
     setState(() {
       documentSize = fileSizeInMB.toStringAsFixed(1);
       log("document Size is ${widget.dataModel.fileSize}");
-         log("converted Size is $documentSize");
+      log("converted Size is $documentSize");
     });
- 
   }
 
   @override
@@ -58,15 +87,9 @@ class _DocumentDetailedViewPageState extends State<DocumentDetailedViewPage> {
       body: SafeArea(
         child: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 30.0),
-              child: DocumentOverViewMainWidget(
-                  heightMediaQuery: height,
-                  widthMediaQuery: width,
-                  documentType: widget.dataModel.documentType,
-                  title: widget.dataModel.title),
-            ),
-            DocumentDetailsShowWidget(width: width,data: widget.dataModel,fileSize: documentSize),
+            checkWidgetType(),
+            DocumentDetailsShowWidget(
+                width: width, data: widget.dataModel, fileSize: documentSize),
             const Padding(
               padding: EdgeInsets.only(top: 15.0, left: 14),
               child: Center(
@@ -77,10 +100,10 @@ class _DocumentDetailedViewPageState extends State<DocumentDetailedViewPage> {
                 ),
               ),
             ),
-             Padding(
+            Padding(
               padding: const EdgeInsets.only(top: 15.0, left: 14),
               child: Text(
-               widget.dataModel.description,
+                widget.dataModel.description,
                 // overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 16,

@@ -2,8 +2,6 @@
 import 'package:hive/hive.dart';
 part 'data_model_hive.g.dart';
 
-
-
 @HiveType(typeId: 1)
 class DataModelHive {
   @HiveField(0)
@@ -16,24 +14,23 @@ class DataModelHive {
   String description;
 
   @HiveField(3)
-  DateTime expiryDate;
+  DateTime? expiryDate;
 
   @HiveField(4)
   double fileSize;
 
   @HiveField(5)
   String? filePath;
-  
+
   @HiveField(6)
   String documentType;
   DataModelHive({
-     this.dataID,
+    this.dataID,
     required this.title,
     required this.description,
-    required this.expiryDate,
+    this.expiryDate,
     required this.fileSize,
-     this.filePath,
+    this.filePath,
     required this.documentType,
   });
-
 }

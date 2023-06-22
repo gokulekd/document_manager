@@ -27,7 +27,7 @@ class _VideoCardWidgetState extends State<VideoCardWidget> {
    
     super.initState();
     _generateThumbnail();
-     calculateDaysBeforeExpiry(DateTime.now(), widget.dataModel.expiryDate);
+     calculateDaysBeforeExpiry(DateTime.now(), widget.dataModel.expiryDate!);
   }
 
   Future<void> _generateThumbnail() async {
@@ -148,18 +148,30 @@ class _VideoCardWidgetState extends State<VideoCardWidget> {
                         color: Colors.black.withOpacity(.7),
                       ),
                     ),
-                     Text(
-                      "Expiry in $totalDaysToExpiry days",
-                      textScaleFactor: 1,
-                      maxLines: 1,
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.bold,
-                          color: totalDaysToExpiry < 30
-                              ? const Color.fromARGB(255, 199, 27, 27)
-                                  .withOpacity(.7)
-                              : Colors.green),
-                    ),
+                      totalDaysToExpiry != 0
+                        ? Text(
+                            "Expiry in $totalDaysToExpiry days",
+                            textScaleFactor: 1,
+                            maxLines: 1,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: totalDaysToExpiry < 30
+                                    ? const Color.fromARGB(255, 199, 27, 27)
+                                        .withOpacity(.7)
+                                    : Colors.orange),
+                          )
+                        : const Text(
+                            "No Expiry ",
+                            textScaleFactor: 1,
+                            maxLines: 1,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                          ),
                   ],
                 ),
               ),

@@ -1,19 +1,14 @@
-
+import 'package:document_manager/over%20view/view/music_play_page.dart';
 import 'package:flutter/material.dart';
-import 'package:open_file/open_file.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 // ignore: must_be_immutable
-class MusicOverviewMainWidget extends StatelessWidget {
+class MusicOverviewMainWidget extends StatefulWidget {
   String title;
   String filePath;
   String documentType;
 
-  double heightMediaQuery;
-  double widthMediaQuery;
-
   MusicOverviewMainWidget({
-    required this.heightMediaQuery,
-    required this.widthMediaQuery,
     required this.documentType,
     required this.filePath,
     required this.title,
@@ -21,10 +16,87 @@ class MusicOverviewMainWidget extends StatelessWidget {
   });
 
   @override
+  State<MusicOverviewMainWidget> createState() =>
+      _MusicOverviewMainWidgetState();
+}
+
+class _MusicOverviewMainWidgetState extends State<MusicOverviewMainWidget> {
+  late AudioPlayer audioPlayer;
+  bool isPlaying = false;
+  double sliderValue = 0.0;
+  double maxDuration = 0.0;
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer = AudioPlayer();
+    audioPlayer.onDurationChanged.listen((Duration duration) {
+      setState(() {
+        maxDuration = duration.inMilliseconds.toDouble();
+      });
+    });
+
+    audioPlayer.onPositionChanged.listen((Duration position) {
+      setState(() {
+        sliderValue = position.inMilliseconds.toDouble();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.release();
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
+  void playSong() async {
+    await audioPlayer.play(DeviceFileSource(widget.filePath));
+    setState(() {
+      isPlaying = true;
+    });
+  }
+
+  void pauseSong() async {
+    await audioPlayer.pause();
+
+    setState(() {
+      isPlaying = false;
+    });
+  }
+
+  void seekTo(double value) {
+    setState(() {
+      audioPlayer.seek(Duration(milliseconds: value.round()));
+    });
+  }
+
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  showSongPlayerBottomSheet(BuildContext context) async {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return AudioPlayerWidget(
+          filePath: widget.filePath,
+          title: widget.title,
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     return InkWell(
-        onTap: () {
-        OpenFile.open(filePath);
+      onTap: () async {
+        await showSongPlayerBottomSheet(context);
+        setState(() {});
       },
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -66,9 +138,9 @@ class MusicOverviewMainWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: widthMediaQuery * 0.48,
+                              width: width * 0.48,
                               child: Text(
-                                title,
+                                widget.title,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.bold),
@@ -77,15 +149,11 @@ class MusicOverviewMainWidget extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Text(
-                                documentType,
+                                widget.documentType,
                                 style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ),
-                            // ElevatedButton.icon(
-                            //     onPressed: () {},
-                            //     icon: const Icon(Icons.edit),
-                            //     label: const Text("Edit"))
                           ],
                         ),
                       ),

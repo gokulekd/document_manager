@@ -32,7 +32,7 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
   late TextEditingController descriptionController;
   final box = GetStorage();
 
-  DateTime? selectedDate;
+  DateTime selectedDate = DateTime.now();
   Future<void> selectDate() async {
     final date = await showDatePicker(
       context: context,
@@ -48,8 +48,6 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
       });
     }
   }
-
- 
 
   @override
   void initState() {
@@ -69,7 +67,6 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
 
   @override
   Widget build(BuildContext context) {
-   
     double width = MediaQuery.of(context).size.width;
     return ScaffoldMessenger(
       key: _scaffoldMessengerKey,
@@ -102,9 +99,7 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 10.0, bottom: 15),
                 child: TextFormField(
-                  onChanged: (value) {
-                    globalKey.currentState!.validate();
-                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: nameController,
                   textInputAction: TextInputAction.next,
                   inputFormatters: <TextInputFormatter>[
@@ -120,6 +115,7 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
                     return null;
                   },
                   decoration: InputDecoration(
+                    hintText: "Please enter a name (mandatory)",
                     border: OutlineInputBorder(
                       // borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(15),
@@ -151,16 +147,10 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
                   onChanged: (value) {
                     globalKey.currentState!.validate();
                   },
-                  validator: (value) {
-                    String value = dateController.text;
-                    if (value.isEmpty) {
-                      return "Please select a valid date";
-                    }
-                    return null;
-                  },
                   readOnly: true,
                   controller: dateController,
                   decoration: InputDecoration(
+                    hintText: "Please select a date (optional)",
                     suffixIcon: IconButton(
                         onPressed: () => selectDate(),
                         icon: const Icon(
@@ -195,18 +185,10 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 10.0, bottom: 15),
                 child: TextFormField(
-                  maxLines: 17,
-                  onChanged: (value) {
-                    globalKey.currentState!.validate();
-                  },
+                  maxLines: 10,
                   controller: descriptionController,
                   textInputAction: TextInputAction.next,
-                  // inputFormatters: <TextInputFormatter>[
-                  //   FilteringTextInputFormatter.allow(
-                  //       RegExp(r'^[A-Z a-z]*$')
-                  //       ),
-                  //   //LengthLimitingTextInputFormatter(20),
-                  // ],
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     String value = descriptionController.text;
                     if (value.isEmpty) {
@@ -215,6 +197,7 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
                     return null;
                   },
                   decoration: InputDecoration(
+                    hintText: "Please enter description (mandatory)",
                     border: OutlineInputBorder(
                       // borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(15),
@@ -296,13 +279,12 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
                             // await box.erase();
                             if (selectedValue1 == null) {
                               const snackBar = SnackBar(
-                                content: Text('please select a document type!'),
+                                content: Text('Please select a document type!'),
                               );
                               _scaffoldMessengerKey.currentState
                                   ?.showSnackBar(snackBar);
                             } else {
-                              log(
-                                  "the selected value is >>>>> ${selectedValue1.toString()}");
+                              log("the selected value is >>>>> ${selectedValue1.toString()}");
                               pickFile(
                                   selectedValue: selectedValue1.toString());
                             }
@@ -330,20 +312,15 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
                         if (globalKey.currentState!.validate()) {
                           if (selectedFilePath != null) {
                             final dataModel = DataModelHive(
-                                dataID: "no id",
                                 title: nameController.text,
+                                dataID: "no id",
                                 description: descriptionController.text,
-                                expiryDate: selectedDate!,
+                                expiryDate: selectedDate,
                                 fileSize: selectedFileSize!,
                                 filePath: selectedFilePath!,
                                 documentType: selectedValue1.toString());
                             addDataToHive(inputData: dataModel);
-                            // await addDataToStorage(
-                            //     title: nameController.text,
-                            //     description: descriptionController.text,
-                            //     expiryDate: selectedDate!,
-                            //     location: selectedFile!);
-                            // ignore: use_build_context_synchronously
+
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -352,7 +329,7 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
                           } else {
                             const snackBar = SnackBar(
                               content: Text(
-                                  'please select a document from your device !'),
+                                  'Please select a document from your device !'),
                             );
                             _scaffoldMessengerKey.currentState
                                 ?.showSnackBar(snackBar);
@@ -376,34 +353,32 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
     );
   }
 
-//   Future<void> pickFiles({required String selectedValue}) async {
-//     FilePickerResult? result = await FilePicker.platform.pickFiles(
-//       type: FileType.custom,
-//       allowedExtensions: [selectedValue], // Specify the file types here
-//     );
-
-//     if (result != null) {
-//       // Files picked successfully
-//       List<PlatformFile> files = result.files;
-//       for (PlatformFile file in files) {
-//         print('File picked: ${file.name}');
-//         setState(() {
-//           selectedFile = file.name;
-//         });
-//       }
-//     } else {
-//       // User canceled the file picker
-//       print('No file picked.');
-//     }
-//   }
 
   Future<void> pickFile({required String selectedValue}) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: [selectedValue], // Specify the allowed file types here
-    );
+    FilePickerResult? result;
+    if (selectedValue == "mp3") {
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.audio,
+        // Specify the allowed file types here
+      );
+    } else if (selectedValue == "mp4") {
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.video,
+        // Specify the allowed file types here
+      );
+    } else if (selectedValue == "jpg") {
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        // Specify the allowed file types here
+      );
+    } else {
+      result = await FilePicker.platform
+          .pickFiles(type: FileType.custom, allowedExtensions: [selectedValue]
+              );
+    }
 
-    if (result != null) {
+    if (result != null && selectedValue == result.files.first.extension) {
+      log("selected file extension is>>>> ${result.files.first.extension.toString()}");
       PlatformFile file = result.files.first;
 
       // Handle the picked file
@@ -417,78 +392,59 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
       });
       // ignore: use_build_context_synchronously
     } else {
-      // User canceled the file picker
-      log('No file picked.');
+      log("selected file extension is>>>> ${result!.files.first.extension.toString()}");
+// ignore: use_build_context_synchronously
+      showAlertDialog(context);
     }
   }
 
-  addDataToStorage(
-      {required String title,
-      required String description,
-      required DateTime expiryDate,
-      required String location}) async {
-    List<DataModel> data = [];
-    final imageDAta = await box.read("image");
-    if (imageDAta == null) {
-      data.add(
-        DataModel(
-            title: title,
-            description: description,
-            filePath: location,
-            expiryDate: expiryDate),
-      );
-
-      box.write('image', data);
-      log("Data uploaded successfully");
-    } else {
-      data = imageDAta;
-      data.add(
-        DataModel(
-          title: title,
-          description: description,
-          filePath: location,
-          expiryDate: expiryDate,
-        ),
-      );
-
-      box.write('image', data);
-      log("Data uploaded successfully");
-    }
-
-    // } else {
-    //   data.insert(
-    //     data.length + 1,
-    //     DataModel(
-    //       title: title,
-    //       description: description,
-    //       filePath: location,
-    //       expiryDate: expiryDate,
-    //     ),
-    //   );
-
-    await box.write('image', data);
-    log("Data uploaded successfully");
+  List<DropdownMenuItem<String>> get dropdownItemsBankBranch {
+    List<DropdownMenuItem<String>> menuItems = [
+      const DropdownMenuItem(
+        value: "mp3",
+        child: Text("Audio"),
+      ),
+      const DropdownMenuItem(
+        value: "mp4",
+        child: Text("Video"),
+      ),
+      const DropdownMenuItem(
+        value: "pdf",
+        child: Text("pdf"),
+      ),
+      const DropdownMenuItem(
+        value: "jpg",
+        child: Text("Image"),
+      ),
+    ];
+    return menuItems;
   }
-}
 
-List<DropdownMenuItem<String>> get dropdownItemsBankBranch {
-  List<DropdownMenuItem<String>> menuItems = [
-    const DropdownMenuItem(
-      value: "mp3",
-      child: Text("Audio"),
-    ),
-    const DropdownMenuItem(
-      value: "mp4",
-      child: Text("Video"),
-    ),
-    const DropdownMenuItem(
-      value: "Pdf",
-      child: Text("Pdf"),
-    ),
-    const DropdownMenuItem(
-      value: "jpg",
-      child: Text("Image"),
-    ),
-  ];
-  return menuItems;
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      onPressed: () async {
+        Navigator.pop(context);
+      },
+      child: const Text("Okay"),
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Alert"),
+      content: const Text(
+          "the selected document type did'nt match with the picked file document type.please try again"),
+      actions: [
+        cancelButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

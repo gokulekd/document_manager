@@ -36,6 +36,51 @@ class _HomePageScreenState extends State<HomePageScreen> {
       _permissionStatus = status;
     });
     log(_permissionStatus.toString());
+
+    if (_permissionStatus == PermissionStatus.denied ||
+        _permissionStatus.isPermanentlyDenied) {
+      // ignore: use_build_context_synchronously
+      showAlertDialog(context);
+    }
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      onPressed: () async {
+        Navigator.pop(context);
+        final status = await Permission.storage.request();
+        setState(() {
+          _permissionStatus = status;
+        });
+      },
+      child: const Text("back"),
+    );
+    Widget continueButton = TextButton(
+        onPressed: () {
+          openAppSettings();
+          Navigator.pop(context);
+        },
+        child: const Text("Go to Settings"));
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Alert"),
+      content: const Text(
+          "To change the permission settings,you fist have to turn on the storage permission in the app settings"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   @override
@@ -59,7 +104,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
             backgroundColor: Colors.white,
             title: Text(
               'Document manger',
-             
               style: TextStyle(
                 color: Colors.black.withOpacity(.7),
                 fontWeight: FontWeight.w700,

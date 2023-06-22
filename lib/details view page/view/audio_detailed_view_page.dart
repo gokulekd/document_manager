@@ -60,8 +60,7 @@ class _AudioDetailedViewPageState extends State<AudioDetailedViewPage> {
               padding: const EdgeInsets.only(top: 30.0),
               child: MusicOverviewMainWidget(
                   filePath: widget.dataModel.filePath!,
-                  heightMediaQuery: height,
-                  widthMediaQuery: width,
+             
                   documentType: widget.dataModel.documentType,
                   title: widget.dataModel.title),
             ),

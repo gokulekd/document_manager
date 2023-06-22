@@ -1,4 +1,4 @@
-
+import 'package:document_manager/over%20view/view/pdf_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 
@@ -8,12 +8,7 @@ class PdfOverviewMainWidget extends StatelessWidget {
   String filePath;
   String documentType;
 
-  double heightMediaQuery;
-  double widthMediaQuery;
-
   PdfOverviewMainWidget({
-    required this.heightMediaQuery,
-    required this.widthMediaQuery,
     required this.documentType,
     required this.filePath,
     required this.title,
@@ -22,9 +17,15 @@ class PdfOverviewMainWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
-        OpenFile.open(filePath);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PDFViewerSampleWidget(filePath: filePath),
+            ));
+        // OpenFile.open(filePath);
       },
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -66,7 +67,7 @@ class PdfOverviewMainWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: widthMediaQuery * 0.48,
+                              width: width * 0.48,
                               child: Text(
                                 title,
                                 overflow: TextOverflow.ellipsis,

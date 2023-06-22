@@ -97,7 +97,7 @@ class MusicDetailsShowWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        DateFormat.yMMMd().format(data.expiryDate),
+                        DateFormat.yMMMd().format(data.expiryDate!),
                         style: const TextStyle(color: Colors.white),
                       ),
                     )

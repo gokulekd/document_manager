@@ -20,7 +20,7 @@ void addDataToHive({required DataModelHive inputData}) async {
     final hiveModelObject = await Hive.openBox<DataModelHive>("videoData");
     hiveModelObject.add(inputData);
   }
-  if (inputData.documentType == "Pdf") {
+  if (inputData.documentType == "pdf") {
     final hiveModelObject = await Hive.openBox<DataModelHive>("documentData");
     await hiveModelObject.add(inputData);
   }

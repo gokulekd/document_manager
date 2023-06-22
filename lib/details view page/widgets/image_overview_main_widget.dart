@@ -1,7 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:document_manager/over%20view/view/image_over_view.dart';
 import 'package:flutter/material.dart';
-import 'package:open_file/open_file.dart';
 
 // ignore: must_be_immutable
 class ImageOverviewMainWidget extends StatelessWidget {
@@ -9,12 +10,10 @@ class ImageOverviewMainWidget extends StatelessWidget {
   String filePath;
   String documentType;
 
-  double heightMediaQuery;
-  double widthMediaQuery;
+
 
   ImageOverviewMainWidget({
-    required this.heightMediaQuery,
-    required this.widthMediaQuery,
+
     required this.documentType,
     required this.filePath,
     required this.title,
@@ -23,9 +22,11 @@ class ImageOverviewMainWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+       double width = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
-        OpenFile.open(filePath);
+        log("taped");
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ImageOverView(filePath: filePath),));
       },
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -65,7 +66,7 @@ class ImageOverviewMainWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: widthMediaQuery * 0.48,
+                              width: width * 0.48,
                               child: Text(
                                 title,
                                 overflow: TextOverflow.ellipsis,

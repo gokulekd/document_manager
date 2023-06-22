@@ -59,8 +59,7 @@ class _ImageDetailedViewPageState extends State<ImageDetailedViewPage> {
               padding: const EdgeInsets.only(top: 30.0),
               child: ImageOverviewMainWidget(
                   filePath: widget.dataModel.filePath!,
-                  heightMediaQuery: height,
-                  widthMediaQuery: width,
+             
                   documentType: widget.dataModel.documentType,
                   title: widget.dataModel.title),
             ),

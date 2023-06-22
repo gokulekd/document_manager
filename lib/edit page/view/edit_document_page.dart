@@ -44,7 +44,7 @@ class _EditDocumentPageState extends State<EditDocumentPage> {
   void initState() {
     nameController = TextEditingController(text: widget.dataModel.title,);
     dateController = TextEditingController(
-      text: DateFormat.yMMMd().format(widget.dataModel.expiryDate),
+      text: DateFormat.yMMMd().format(widget.dataModel.expiryDate!),
     );
     descriptionController =
         TextEditingController(text: widget.dataModel.description);

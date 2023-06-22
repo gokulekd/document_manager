@@ -28,10 +28,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  assets_audio_player: ^3.0.6
+  audioplayers: ^4.1.0
   cupertino_icons: ^1.0.2
-  file_picker: ^5.3.1
+  file_picker: 
+  flick_video_player: ^0.3.1
   flutter:
     sdk: flutter
+
   get: ^4.6.5
   get_storage: ^2.1.1
   hive: ^2.2.3
@@ -44,6 +48,8 @@ dependencies:
   pdf_render: ^1.4.0
   permission_handler: ^10.3.0
   responsive_framework: ^1.0.0
+  syncfusion_flutter_pdfviewer: ^21.2.10
+  video_player: ^2.6.1
   video_thumbnail: ^0.5.3
 
 dev_dependencies:

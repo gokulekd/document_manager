@@ -59,8 +59,7 @@ class _PdfDetailedViewPageState extends State<PdfDetailedViewPage> {
               padding: const EdgeInsets.only(top: 30.0),
               child: PdfOverviewMainWidget(
                   filePath: widget.dataModel.filePath!,
-                  heightMediaQuery: height,
-                  widthMediaQuery: width,
+                
                   documentType: widget.dataModel.documentType,
                   title: widget.dataModel.title),
             ),

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:document_manager/over%20view/view/video_player_page.dart';
 import 'package:open_file/open_file.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -10,12 +11,7 @@ class VideoOverviewMainWidget extends StatefulWidget {
   String filePath;
   String documentType;
 
-  double heightMediaQuery;
-  double widthMediaQuery;
-
   VideoOverviewMainWidget({
-    required this.heightMediaQuery,
-    required this.widthMediaQuery,
     required this.documentType,
     required this.filePath,
     required this.title,
@@ -57,9 +53,15 @@ class _VideoOverviewMainWidgetState extends State<VideoOverviewMainWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: () {
-        OpenFile.open(widget.filePath);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => VideoPlayerWidget(videoUrl: widget.filePath),
+            ));
+        // O
       },
       child: Padding(
         padding: const EdgeInsets.all(5.0),
@@ -120,7 +122,7 @@ class _VideoOverviewMainWidgetState extends State<VideoOverviewMainWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: widget.widthMediaQuery * 0.48,
+                              width: width * 0.48,
                               child: Text(
                                 widget.title,
                                 overflow: TextOverflow.ellipsis,

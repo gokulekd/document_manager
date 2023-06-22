@@ -1,15 +1,15 @@
 import 'dart:developer';
 
 import 'package:document_manager/details%20view%20page/view/audio_detailed_view_page.dart';
+import 'package:document_manager/details%20view%20page/view/document_detailed_view_page.dart';
 import 'package:document_manager/home%20page/model/data_model_hive.dart';
 import 'package:flutter/material.dart';
-
 
 // ignore: must_be_immutable
 class AudioCard extends StatefulWidget {
   DataModelHive data;
   int index;
-  AudioCard({super.key, required this.data,required this.index});
+  AudioCard({super.key, required this.data, required this.index});
 
   @override
   State<AudioCard> createState() => _AudioCardState();
@@ -19,7 +19,7 @@ class _AudioCardState extends State<AudioCard> {
   int totalDaysToExpiry = 0;
   @override
   void initState() {
-    calculateDaysBeforeExpiry(DateTime.now(), widget.data.expiryDate);
+    calculateDaysBeforeExpiry(DateTime.now(), widget.data.expiryDate!);
     super.initState();
   }
 
@@ -42,7 +42,9 @@ class _AudioCardState extends State<AudioCard> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AudioDetailedViewPage(dataModel: widget.data,index:widget.index ),
+            builder: (context) => DocumentDetailedViewPage(
+              dataModel: widget.data,
+            ),
           ),
         );
       },
@@ -106,18 +108,30 @@ class _AudioCardState extends State<AudioCard> {
                         color: Colors.black.withOpacity(.7),
                       ),
                     ),
-                    Text(
-                      "Expiry in $totalDaysToExpiry days",
-                      textScaleFactor: 1,
-                      maxLines: 1,
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.bold,
-                          color: totalDaysToExpiry < 30
-                              ? const Color.fromARGB(255, 199, 27, 27)
-                                  .withOpacity(.7)
-                              : Colors.green),
-                    ),
+                    totalDaysToExpiry != 0
+                        ? Text(
+                            "Expiry in $totalDaysToExpiry days",
+                            textScaleFactor: 1,
+                            maxLines: 1,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: totalDaysToExpiry < 30
+                                    ? const Color.fromARGB(255, 199, 27, 27)
+                                        .withOpacity(.7)
+                                    : Colors.orange),
+                          )
+                        : const Text(
+                            "No Expiry ",
+                            textScaleFactor: 1,
+                            maxLines: 1,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                          ),
                   ],
                 ),
               ),
