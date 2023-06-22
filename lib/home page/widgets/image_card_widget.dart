@@ -1,6 +1,6 @@
 import 'dart:io';
+import 'package:document_manager/constant/color.dart';
 import 'package:document_manager/details%20view%20page/view/document_detailed_view_page.dart';
-import 'package:document_manager/details%20view%20page/view/image_detailed_view_page.dart';
 import 'package:document_manager/home%20page/model/data_model_hive.dart';
 import 'package:flutter/material.dart';
 
@@ -87,7 +87,7 @@ class _ImageCardState extends State<ImageCard> {
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: Colors.black.withOpacity(.8),
+                        color:fadeBlackColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

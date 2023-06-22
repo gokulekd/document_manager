@@ -19,7 +19,7 @@ class DocumentDetailsShowWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: Container(
-        height: 190,
+        height: 140,
         width: width,
         color: const Color.fromARGB(255, 89, 102, 199),
         child: Column(
@@ -82,22 +82,7 @@ class DocumentDetailsShowWidget extends StatelessWidget {
                 ),
               ],
             ),
-            ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 48, 54, 174),
-                    fixedSize: const Size(90, 50),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50))),
-                onPressed: () {
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const EditDocumentPage(),
-                  //   ),
-                  // );
-                },
-                icon: const Icon(Icons.edit),
-                label: const Text("Edit")),
+    
           ],
         ),
       ),

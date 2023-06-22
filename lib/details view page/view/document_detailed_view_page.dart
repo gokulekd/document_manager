@@ -31,7 +31,7 @@ class _DocumentDetailedViewPageState extends State<DocumentDetailedViewPage> {
           documentType: widget.dataModel.documentType,
           filePath: widget.dataModel.filePath!,
           title: widget.dataModel.title);
-    } else if (widget.dataModel.documentType == "Pdf") {
+    } else if (widget.dataModel.documentType == "pdf") {
     return  PdfOverviewMainWidget(
           documentType: widget.dataModel.documentType,
           filePath: widget.dataModel.filePath!,

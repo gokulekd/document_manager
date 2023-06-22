@@ -1,7 +1,9 @@
-import 'package:document_manager/details%20view%20page/view/pdf_detailed_view_page.dart';
+import 'package:document_manager/constant/color.dart';
 import 'package:document_manager/home%20page/model/data_model_hive.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_render/pdf_render.dart';
+
+import '../../details view page/view/document_detailed_view_page.dart';
 
 // ignore: must_be_immutable
 class PdfCardWidget extends StatefulWidget {
@@ -44,7 +46,7 @@ class _PdfCardWidgetState extends State<PdfCardWidget> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                PdfDetailedViewPage(dataModel: widget.dataModel),
+                DocumentDetailedViewPage(dataModel: widget.dataModel),
           ),
         );
       },
@@ -110,7 +112,7 @@ class _PdfCardWidgetState extends State<PdfCardWidget> {
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: Colors.black.withOpacity(.8),
+                        color:fadeBlackColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:document_manager/details%20view%20page/view/audio_detailed_view_page.dart';
+import 'package:document_manager/constant/color.dart';
 import 'package:document_manager/details%20view%20page/view/document_detailed_view_page.dart';
 import 'package:document_manager/home%20page/model/data_model_hive.dart';
 import 'package:flutter/material.dart';
@@ -73,10 +73,10 @@ class _AudioCardState extends State<AudioCard> {
                       ),
                     ),
                     alignment: Alignment.center,
-                    child: const Icon(
+                    child: Icon(
                       Icons.music_note_outlined,
                       size: 40,
-                      color: Colors.white,
+                      color: whiteColor,
                     )),
               ),
               SizedBox(
@@ -93,7 +93,7 @@ class _AudioCardState extends State<AudioCard> {
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: Colors.black.withOpacity(.8),
+                        color: fadeBlackColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

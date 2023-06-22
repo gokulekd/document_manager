@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:document_manager/details%20view%20page/view/video_detailed_view_page.dart';
+import 'package:document_manager/constant/color.dart';
+import 'package:document_manager/details%20view%20page/view/document_detailed_view_page.dart';
 import 'package:document_manager/home%20page/model/data_model_hive.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -63,7 +64,7 @@ class _VideoCardWidgetState extends State<VideoCardWidget> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>  VideoDetailedViewPage(dataModel: widget.dataModel),
+            builder: (context) =>  DocumentDetailedViewPage(dataModel: widget.dataModel),
           ),
         );
       },
@@ -133,7 +134,7 @@ class _VideoCardWidgetState extends State<VideoCardWidget> {
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: Colors.black.withOpacity(.8),
+                        color:fadeBlackColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

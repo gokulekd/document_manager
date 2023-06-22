@@ -1,7 +1,7 @@
 import 'package:document_manager/home%20page/functions/hive_data_model_functions.dart';
 import 'package:document_manager/home%20page/model/data_model_hive.dart';
+import 'package:document_manager/home%20page/widgets/image_card_widget.dart';
 import 'package:flutter/material.dart';
-import 'image_card_widget.dart';
 
 class ImageCardWidgetGroup extends StatefulWidget {
   const ImageCardWidgetGroup({super.key});
