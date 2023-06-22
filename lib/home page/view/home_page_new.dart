@@ -1,8 +1,5 @@
 import 'dart:developer';
 
-import 'package:document_manager/add%20document/view/add_document_page.dart';
-import 'package:document_manager/constant/color.dart';
-import 'package:document_manager/constant/tab_contants.dart';
 import 'package:document_manager/home%20page/widgets/audio_card_widget_group.dart';
 import 'package:document_manager/home%20page/widgets/home_page_app_bar.dart';
 import 'package:document_manager/home%20page/widgets/image_card_widget_group.dart';

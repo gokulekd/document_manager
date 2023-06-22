@@ -1,6 +1,6 @@
 import 'package:document_manager/add%20document/view/add_document_page.dart';
 import 'package:document_manager/constant/color.dart';
-import 'package:document_manager/constant/tab_contants.dart';
+import 'package:document_manager/constant/tab_constants.dart';
 import 'package:flutter/material.dart';
 
 PreferredSize homePageAppBar(BuildContext context) {

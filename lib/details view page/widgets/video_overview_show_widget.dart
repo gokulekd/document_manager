@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:document_manager/over%20view/view/video_player_page.dart';
-import 'package:open_file/open_file.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -147,10 +146,10 @@ class _VideoOverviewMainWidgetState extends State<VideoOverviewMainWidget> {
                       ),
                     ],
                   ),
-                  Column(
+                  const Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Icon(

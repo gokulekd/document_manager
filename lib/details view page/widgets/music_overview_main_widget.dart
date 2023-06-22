@@ -159,10 +159,10 @@ class _MusicOverviewMainWidgetState extends State<MusicOverviewMainWidget> {
                       ),
                     ],
                   ),
-                  Column(
+                  const Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Icon(

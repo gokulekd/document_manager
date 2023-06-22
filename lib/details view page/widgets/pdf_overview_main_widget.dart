@@ -1,6 +1,5 @@
 import 'package:document_manager/over%20view/view/pdf_view_page.dart';
 import 'package:flutter/material.dart';
-import 'package:open_file/open_file.dart';
 
 // ignore: must_be_immutable
 class PdfOverviewMainWidget extends StatelessWidget {
@@ -92,10 +91,10 @@ class PdfOverviewMainWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Column(
+                  const Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Icon(
