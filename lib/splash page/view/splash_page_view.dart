@@ -11,7 +11,7 @@ class SplashPageView extends StatelessWidget {
     navigate(context);
     return Scaffold(
       body: ListView(
-        children: [Lottie.asset(repeat: false, lottieFile)],
+        children: [Lottie.asset(repeat: false, lottieFile )],
       ),
     );
   }

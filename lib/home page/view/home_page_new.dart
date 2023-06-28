@@ -2,9 +2,6 @@ import 'dart:developer';
 
 import 'package:document_manager/home%20page/widgets/audio_card_widget_group.dart';
 import 'package:document_manager/home%20page/widgets/home_page_app_bar.dart';
-import 'package:document_manager/home%20page/widgets/image_card_widget_group.dart';
-import 'package:document_manager/home%20page/widgets/pdf_card_widget_group.dart';
-import 'package:document_manager/home%20page/widgets/video_card_widget_group.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -31,18 +28,18 @@ class _HomePageScreenState extends State<HomePageScreen> {
       length: 4,
       child: Scaffold(
         appBar: homePageAppBar(context),
-        body: const TabBarView(
+        body:  TabBarView(
           children: [
-            AudioCardWidgetGroup(),
-            VideoCardWidgetGroup(),
-            PdfCardWidgetGroup(),
-            ImageCardWidgetGroup(),
+            AudioCardWidgetGroup(dataType: "audioData"),
+            AudioCardWidgetGroup(dataType: "videoData"),
+            AudioCardWidgetGroup(dataType: "documentData"),
+            AudioCardWidgetGroup(dataType: "imageData"),
+
           ],
         ),
       ),
     );
   }
-
 
   Future<void> checkPermissionStatus() async {
     final status = await Permission.storage.status;
